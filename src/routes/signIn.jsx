@@ -1,5 +1,4 @@
-import * as React from "react";
-import { Link, Routes, Route, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -10,24 +9,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Sponthan
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const theme = createTheme();
 
 export default function SignIn() {
@@ -35,12 +16,17 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-    navigate("/mainboard");
+    const data = new FormData(event.currentTarget);
+    console.log(data.get("email"));
+    console.log(data.get("password"));
+    if (data.get("email") == "admin" && data.get("password") == "admin")
+      navigate("/mainboard");
+    else alert("Wrong login or password!");
   };
 
   return (
     <ThemeProvider theme={theme}>
+      {console.log(theme)}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -94,7 +80,6 @@ export default function SignIn() {
             </Button>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

@@ -1,0 +1,17 @@
+.hero {
+  color: #1565c0;
+  padding: 15px 20px 20px 20px;
+  border-radius: 30px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 5px 50px -10px;
+}
+
+.hero h2 {
+  font-size: 35px;
+  font-weight: 800;
+  margin: 5px;
+}
+
+.hero p {
+  font-size: 20px;
+  font-weight: 700;
+}

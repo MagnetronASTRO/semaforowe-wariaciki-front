@@ -6,13 +6,10 @@ import {
   Container,
   Grid,
   Typography,
-  FormControlLabel,
-  Checkbox,
   MenuItem,
   Select,
   InputLabel,
   FormControl,
-  TextareaAutosize,
 } from "@mui/material";
 import {
   LocalizationProvider,
@@ -21,8 +18,9 @@ import {
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import { FaUpload } from "react-icons/fa";
 
-export default function Addcategoryform() {
+export default function Addeventform() {
   const [categories, setCategories] = useState([]);
   const [eventDuration, setEventDuration] = React.useState(dayjs(0));
   const [eventDate, setEventDate] = React.useState(dayjs(new Date()));
@@ -31,6 +29,9 @@ export default function Addcategoryform() {
     const fetchData = async () => {
       try {
         const categoriesResponse = await fetch(apiAdress + "/api/categories");
+        if (!categoriesResponse.ok) {
+          throw new Error("Failed to fetch categories.");
+        }
         const categoriesData = await categoriesResponse.json();
         setCategories(categoriesData);
       } catch (error) {
@@ -80,16 +81,16 @@ export default function Addcategoryform() {
     }));
   };
 
-  const handleCheckboxChange = (e) => {
-    const { name, checked } = e.target;
-    setFormValues((prevState) => ({
-      ...prevState,
-      [name]: checked,
-    }));
-  };
+  // const handleCheckboxChange = (e) => {
+  //   const { name, checked } = e.target;
+  //   setFormValues((prevState) => ({
+  //     ...prevState,
+  //     [name]: checked,
+  //   }));
+  // };
 
   const handleSubmit = async (e) => {
-    event.preventDefault();
+    e.preventDefault();
 
     const requestOptions = {
       method: "POST",
@@ -109,19 +110,31 @@ export default function Addcategoryform() {
   };
 
   return (
-    <Container maxWidth="md">
-      <Typography variant="h4" align="center" gutterBottom>
+    <Container>
+      <Typography
+        variant="h4"
+        align="center"
+        gutterBottom
+        style={{ fontSize: "20px" }}
+      >
         Add Event
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItem: "stretch",
+        }}
+      >
         <Grid
           container
-          spacing={1}
+          spacing={2}
           direction="column"
-          justifyContent="center"
+          justifyContent="space-evenly"
           alignItems="stretch"
         >
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={6} style={{ minWidth: "250px" }}>
             <TextField
               id="outlined-basic"
               label="Event Name"
@@ -129,9 +142,10 @@ export default function Addcategoryform() {
               required
               name="name"
               onChange={handleChange}
+              style={{ width: "100%" }}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} style={{ minWidth: "250px" }}>
             <TextField
               id="outlined-basic"
               label="Event location"
@@ -139,9 +153,10 @@ export default function Addcategoryform() {
               required
               name="location"
               onChange={handleChange}
+              style={{ width: "100%" }}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} style={{ minWidth: "250px" }}>
             <FormControl fullWidth>
               <InputLabel>Event Category</InputLabel>
               <Select
@@ -150,22 +165,21 @@ export default function Addcategoryform() {
                 required
                 value={formValues.category}
                 onChange={handleChange}
+                style={{ width: "100%", textAlign: "left" }}
               >
                 {categories.map((category) => (
-                  <MenuItem key={category.id} value={category.id}>
+                  <MenuItem
+                    key={category.id}
+                    value={category.id}
+                    style={{ width: "100%" }}
+                  >
                     {category.name}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Button variant="contained" component="label">
-              Upload Event Image
-              <input type="file" hidden />
-            </Button>
-          </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} style={{ minWidth: "250px" }}>
             <TextField
               id="outlined-basic"
               label="Event Description"
@@ -173,30 +187,64 @@ export default function Addcategoryform() {
               required
               name="description"
               onChange={handleChange}
+              style={{ width: "100%" }}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Grid item xs={12} md={6} style={{ minWidth: "250px" }}>
+            <LocalizationProvider
+              dateAdapter={AdapterDayjs}
+              style={{ width: "100%" }}
+            >
               <DateTimePicker
+                label="Event Date"
                 defaultValue={dayjs(eventDate)}
                 value={eventDate}
                 onChange={(newValue) => handleDateTimeChange(newValue)}
+                style={{ width: "100%" }}
               />
             </LocalizationProvider>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Grid item xs={12} md={6} style={{ minWidth: "250px" }}>
+            <LocalizationProvider
+              dateAdapter={AdapterDayjs}
+              style={{ width: "100%" }}
+            >
               <TimeField
                 label="Duration"
                 value={eventDuration}
                 onChange={(newValue) => handleDurationChange(newValue)}
                 format="HH:mm"
+                style={{ width: "100%" }}
               />
             </LocalizationProvider>
           </Grid>
-          <Grid item xs={12}>
-            <Button variant="contained" color="primary" type="submit">
-              Submit
+          <Grid item xs={12} md={6} style={{ minWidth: "250px" }}>
+            <Button
+              variant="contained"
+              component="label"
+              style={{ width: "100%", padding: "10px 14px", fontSize: "14px" }}
+            >
+              <span>
+                <FaUpload /> Upload Event Image
+              </span>
+              <input
+                type="file"
+                hidden
+                accept="image/*"
+                id="event-image"
+                name="image"
+                onChange={handleImageChange}
+              />
+            </Button>
+          </Grid>
+          <Grid item xs={12} style={{ minWidth: "250px" }}>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              style={{ width: "100%", padding: "10px 14px" }}
+            >
+              Add Event
             </Button>
           </Grid>
         </Grid>

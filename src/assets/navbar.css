@@ -1,0 +1,54 @@
+.navigation {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 7px 7px -7px rgba(100, 100, 111, 0.2);
+}
+
+.navigation-menu {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  margin: 0 auto;
+  align-self: center;
+  justify-content: space-evenly;
+  color: #1565c0;
+}
+
+nav button {
+  background: 0;
+}
+
+nav button:hover {
+  box-shadow: none;
+}
+nav {
+  color: #1565c0;
+}
+a:hover {
+  color: #1565c0;
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+
+.navbtn {
+  color: #1565c0;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.navbtn:hover {
+  border-bottom: 2px solid #1565c0;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  padding-bottom: 10px;
+}
